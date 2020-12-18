@@ -27,13 +27,17 @@ public class AnimeService {
 		return animes.stream()
 				.filter(anime -> anime.getId().equals(id))
 				.findFirst()
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime ID not Found"));
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found"));
 	}	
 	
 	public Anime save(Anime anime) {
 		anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
 		animes.add(anime);
 		return anime;
+	}
+
+	public void delete(long id) {
+		animes.remove(findById(id));
 	}
 	
 }
