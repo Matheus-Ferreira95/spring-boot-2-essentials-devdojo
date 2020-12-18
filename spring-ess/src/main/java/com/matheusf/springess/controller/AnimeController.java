@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,12 @@ public class AnimeController {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable long id) {
 		animeService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping
+	public ResponseEntity<Void> update(@RequestBody Anime anime) {
+		animeService.update(anime);
 		return ResponseEntity.noContent().build();
 	}
 	
