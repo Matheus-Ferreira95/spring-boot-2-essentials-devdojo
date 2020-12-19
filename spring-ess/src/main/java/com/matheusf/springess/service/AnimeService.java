@@ -1,48 +1,44 @@
 package com.matheusf.springess.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.matheusf.springess.domain.Anime;
+import com.matheusf.springess.dto.AnimeDTO;
+import com.matheusf.springess.repository.AnimeRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AnimeService {
 	
-	private static List<Anime> animes;
-	
-	static {
-		animes = new ArrayList<>(List.of(new Anime(1L, "Boku no Hero"), new Anime(2L, "Berserk")));
-	}	
+	private final AnimeRepository animeRepository;
 	
 	public List<Anime> listAll() {		
-		return animes;
+		return animeRepository.findAll();
 	}
 
-	public Anime findById(long id) {
-		return animes.stream()
-				.filter(anime -> anime.getId().equals(id))
-				.findFirst()
+	public Anime findByIdOrThrowBadRequestException(long id) {
+		return animeRepository.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found"));
 	}	
 	
-	public Anime save(Anime anime) {
-		anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
-		animes.add(anime);
-		return anime;
+	public Anime save(AnimeDTO animeDTO) {
+		return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
 	}
 
-	public void delete(long id) {
-		animes.remove(findById(id));
+	public void delete(long id) {		
+		animeRepository.delete(findByIdOrThrowBadRequestException(id));
 	}
 	
-	public void update(Anime anime) {
-		delete(anime.getId());
-		animes.add(anime);
+	public void update(AnimeDTO animeDTO, long id) {
+		Anime anime = findByIdOrThrowBadRequestException(id);
+		anime.setName(animeDTO.getName());
+		animeRepository.save(anime);
 	}
 	
 }

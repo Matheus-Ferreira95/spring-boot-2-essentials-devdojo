@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheusf.springess.domain.Anime;
+import com.matheusf.springess.dto.AnimeDTO;
 import com.matheusf.springess.service.AnimeService;
 import com.matheusf.springess.util.DateUtil;
 
@@ -40,13 +41,14 @@ public class AnimeController {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Anime> findById(@PathVariable long id){
 		log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-		return ResponseEntity.ok().body(animeService.findById(id));	
+		return ResponseEntity.ok().body(animeService.findByIdOrThrowBadRequestException(id));	
 	}
 	
 	@PostMapping
-	public ResponseEntity<Anime> save(@RequestBody Anime anime){
+	public ResponseEntity<Anime> save(@RequestBody AnimeDTO animeDTO){
+		Anime anime = animeService.save(animeDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(anime.getId()).toUri();
-		return ResponseEntity.created(uri).body(animeService.save(anime));
+		return ResponseEntity.created(uri).body(anime);
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -55,9 +57,9 @@ public class AnimeController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping
-	public ResponseEntity<Void> update(@RequestBody Anime anime) {
-		animeService.update(anime);
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Void> update(@RequestBody AnimeDTO animeDTO, @PathVariable long id) {
+		animeService.update(animeDTO, id);
 		return ResponseEntity.noContent().build();
 	}
 	
