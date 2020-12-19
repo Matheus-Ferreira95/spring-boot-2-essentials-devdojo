@@ -2,11 +2,11 @@ package com.matheusf.springess.controller.exception;
 
 import java.time.LocalDateTime;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 public class StandardError {
 	
 	private String title;

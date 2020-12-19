@@ -3,6 +3,7 @@ package com.matheusf.springess.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.matheusf.springess.domain.Anime;
 import com.matheusf.springess.dto.AnimeDTO;
@@ -30,6 +31,7 @@ public class AnimeService {
 		return animeRepository.findByName(name);
 	}
 	
+	@Transactional
 	public Anime save(AnimeDTO animeDTO) {		
 		return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
 	}

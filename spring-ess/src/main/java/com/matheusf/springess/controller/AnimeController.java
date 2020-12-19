@@ -4,6 +4,8 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +53,7 @@ public class AnimeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Anime> save(@RequestBody AnimeDTO animeDTO){
+	public ResponseEntity<Anime> save(@Valid @RequestBody AnimeDTO animeDTO){
 		Anime anime = animeService.save(animeDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(anime.getId()).toUri();
 		return ResponseEntity.created(uri).body(anime);
