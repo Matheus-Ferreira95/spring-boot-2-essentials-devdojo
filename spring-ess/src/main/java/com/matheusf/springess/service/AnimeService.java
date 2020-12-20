@@ -2,6 +2,8 @@ package com.matheusf.springess.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +20,8 @@ public class AnimeService {
 	
 	private final AnimeRepository animeRepository;
 	
-	public List<Anime> listAll() {		
-		return animeRepository.findAll();
+	public Page<Anime> listAll(Pageable pageable) {		
+		return animeRepository.findAll(pageable);
 	}
 
 	public Anime findByIdOrThrowBadRequestException(long id) {
@@ -37,13 +39,14 @@ public class AnimeService {
 	}
 
 	public void delete(long id) {		
-		animeRepository.delete(findByIdOrThrowBadRequestException(id));
+		animeRepository.delete(findByIdOrThrowBadRequestException(id));		
 	}
 	
+	@Transactional
 	public void update(AnimeDTO animeDTO, long id) {
 		Anime anime = findByIdOrThrowBadRequestException(id);
 		anime.setName(animeDTO.getName());
-		animeRepository.save(anime);
+		animeRepository.save(anime);		
 	}
 	
 }
