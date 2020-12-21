@@ -42,11 +42,20 @@ public class SpringClient implements CommandLineRunner {
 		log.info(kingdomSaved);
 		*/
 		
-		Anime yugioh = Anime.builder().name("yugioh").build();
-		ResponseEntity<Anime> kaiba = new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.POST, new HttpEntity<>(yugioh, createJsonHeader()),
-				new ParameterizedTypeReference<Anime>() {
-				});
+		Anime yugioh = Anime.builder().name("yugioh").build();		
 		
+		//ResponseEntity<Anime> kaiba = new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.POST, new HttpEntity<>(yugioh, createJsonHeader()),
+		//		new ParameterizedTypeReference<Anime>() {} );
+		
+		//log.info(kaiba.getBody().getId());
+		
+		yugioh.setName("digimon");
+		ResponseEntity<Void> updated = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.PUT, new HttpEntity<>(yugioh, createJsonHeader()), Void.class, 1);
+		log.info(updated);
+		
+		//ResponseEntity<Void> deleted = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.DELETE, null, Void.class, 23);
+		//log.info(deleted);
+				
 	}	
 	
 	private static HttpHeaders createJsonHeader() {

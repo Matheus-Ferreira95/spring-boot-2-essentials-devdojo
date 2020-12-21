@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.matheusf.springess.domain.Anime;
 import com.matheusf.springess.dto.AnimeDTO;
 import com.matheusf.springess.exception.BadRequestException;
+import com.matheusf.springess.mapper.AnimeMapper;
 import com.matheusf.springess.repository.AnimeRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,8 @@ public class AnimeService {
 	
 	@Transactional
 	public Anime save(AnimeDTO animeDTO) {		
-		return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
+		//return animeRepository.save(Anime.builder().name(animeDTO.getName()).build());
+		return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animeDTO));
 	}
 
 	public void delete(long id) {		
@@ -50,7 +52,8 @@ public class AnimeService {
 	@Transactional
 	public void update(AnimeDTO animeDTO, long id) {
 		Anime anime = findByIdOrThrowBadRequestException(id);
-		anime.setName(animeDTO.getName());
+		anime = AnimeMapper.INSTANCE.toAnime(animeDTO);
+		anime.setId(id);
 		animeRepository.save(anime);		
 	}	
 }
