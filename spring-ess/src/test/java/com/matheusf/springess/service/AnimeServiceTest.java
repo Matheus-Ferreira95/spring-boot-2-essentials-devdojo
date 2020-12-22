@@ -1,4 +1,4 @@
-package com.matheusf.springess;
+package com.matheusf.springess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
