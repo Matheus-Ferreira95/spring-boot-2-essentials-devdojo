@@ -24,6 +24,7 @@ public class SpringClient implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {		
 		
+		
 		ResponseEntity<Anime> entity = new RestTemplate().getForEntity("http://localhost:8080/animes/{id}", Anime.class, 1);
 		log.info(entity);		
 						
@@ -49,7 +50,7 @@ public class SpringClient implements CommandLineRunner {
 		
 		//log.info(kaiba.getBody().getId());
 		
-		yugioh.setName("digimon");
+		yugioh.setName("digimon digitais");
 		ResponseEntity<Void> updated = new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.PUT, new HttpEntity<>(yugioh, createJsonHeader()), Void.class, 1);
 		log.info(updated);
 		
@@ -60,7 +61,7 @@ public class SpringClient implements CommandLineRunner {
 	
 	private static HttpHeaders createJsonHeader() {
 		HttpHeaders header = new HttpHeaders();
-		header.setContentType(MediaType.APPLICATION_JSON);
+		header.setContentType(MediaType.APPLICATION_JSON);		
 		return header;
 	}
 	
