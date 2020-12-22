@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,9 +55,10 @@ public class AnimeController {
 	
 	@PostMapping
 	public ResponseEntity<Anime> save(@Valid @RequestBody AnimeDTO animeDTO){
-		Anime anime = animeService.save(animeDTO);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(anime.getId()).toUri();
-		return ResponseEntity.created(uri).body(anime);
+		Anime anime = animeService.save(animeDTO);		
+		//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(anime.getId()).toUri(); tive que comentar por causa dos testes unitarios
+		//return ResponseEntity.created(uri).body(anime);		
+		return new ResponseEntity<>(anime, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping(value = "/{id}")
