@@ -94,8 +94,7 @@ public class AnimeControllerTest {
 		Anime expectedAnime = AnimeCreator.createValidAnime();
 		
 		Anime anime = animeController.findById(expectedAnime.getId()).getBody();
-		
-		assertThat(anime).isNotNull();
+					
 		
 		assertThat(anime)
 			.isNotNull()
@@ -142,7 +141,7 @@ public class AnimeControllerTest {
 	}
 	
 	@Test
-	@DisplayName("updated changes anime name when successful") // void não tem muito oque testa sem testes de integração com o bc
+	@DisplayName("updated changes anime name when successful") // void não tem muito oque testar sem testes de integração com o bc
 	void updated_changesAnimeName_WhenSuccessful() {
 		
 		assertThatCode(() -> animeController.update(AnimeDTOCreator.createAnimeDTO(), AnimeCreator.createValidAnime().getId()))
@@ -156,7 +155,7 @@ public class AnimeControllerTest {
 	}	
 	
 	@Test
-	@DisplayName("delete removes when successful") // void não tem muito oque testa sem testes de integração com o bc
+	@DisplayName("delete removes when successful") // void não tem muito oque testar sem testes de integração com o bc
 	void delete_RemovesAnime_WhenSuccessful() {
 		
 		assertThatCode(() -> animeController.delete(1L))

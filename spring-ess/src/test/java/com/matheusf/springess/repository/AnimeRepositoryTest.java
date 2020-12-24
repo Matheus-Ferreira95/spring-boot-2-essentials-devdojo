@@ -29,18 +29,21 @@ class AnimeRepositoryTest {
 		Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 		
 		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+		Long id = animeSaved.getId();		
 		
 		animeSaved.setName("A vaca e o frango");
 		
-		Anime animeUpdated = this.animeRepository.save(animeSaved);
+		Anime animeUpdated = this.animeRepository.save(animeSaved);	
 		
 		assertThat(animeSaved).isNotNull();
 		
 		assertThat(animeSaved.getId()).isNotNull();
 		
 		assertThat(animeUpdated.getName()).isEqualTo(animeSaved.getName());		
+		
+		assertThat(animeUpdated.getId()).isEqualTo(id);
 	}
-	
+		
 	@Test
 	@DisplayName("Save persists anime when Sucessful")
 	void save_PersistAnime_WhenSuccessful() {
@@ -68,23 +71,21 @@ class AnimeRepositoryTest {
 		
 		assertThat(animeOptional).isNotPresent();
 	}
-	
-	@Test
-	@DisplayName("Find By Name returns list of anime when Sucessful")
-	void findByName_ReturnsListOfAnime_WhenSuccessful() {
-		Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
-		
-		Anime animeSaved = this.animeRepository.save(animeToBeSaved);
-				
-		String name = animeSaved.getName();
-		
-		List<Anime> animes = this.animeRepository.findByName(name);
-		
-		assertThat(animes)
-			.isNotEmpty()
-			.contains(animeSaved);		
-	}
-	
+			
+	  @Test	  
+	  @DisplayName("Find By Name returns list of anime when Sucessful") 
+	  void findByName_ReturnsListOfAnime_WhenSuccessful() {
+		  Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
+		  
+		  Anime animeSaved = this.animeRepository.save(animeToBeSaved);
+		  
+		  String name = animeSaved.getName();
+		  
+		  List<Anime> animes = this.animeRepository.findByName(name);
+		  
+		  assertThat(animes) .isNotEmpty() .contains(animeSaved);
+	  }
+	 
 	@Test
 	@DisplayName("Find By Name returns empty list when no anime is found")
 	void findByName_ReturnsEmptList_WhenAnimeIsNotFound() {							
@@ -92,12 +93,11 @@ class AnimeRepositoryTest {
 		
 		assertThat(animes).isEmpty();
 	}
-	
+		
 	@Test
 	@DisplayName("Save throw ConstraintViolationException when name is empty")
 	void save_ThrowsConstraintViolationException_WhenNameIsEmpty() {
-		Anime anime = new Anime();
-		
+		Anime anime = new Anime();		
 		
 		assertThatThrownBy(() -> this.animeRepository.save(anime))
 			.isInstanceOf(ConstraintViolationException.class);

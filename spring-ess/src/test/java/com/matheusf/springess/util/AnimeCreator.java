@@ -24,4 +24,11 @@ public class AnimeCreator {
 				.name("Hajime no Ippo 2")
 				.build();
 	}		
+	
+	public static Anime createAnimeNotExistsOnDatabase() {
+		return Anime.builder()
+				.id(60L)
+				.name("you don't found me")
+				.build();
+	}
 }

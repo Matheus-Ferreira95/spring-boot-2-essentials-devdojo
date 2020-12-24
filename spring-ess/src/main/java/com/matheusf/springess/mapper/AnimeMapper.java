@@ -6,7 +6,7 @@ import org.mapstruct.factory.Mappers;
 import com.matheusf.springess.domain.Anime;
 import com.matheusf.springess.dto.AnimeDTO;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring") // possibilita fazer a ijd caso preciso
 public abstract class AnimeMapper {
 	
 	public static final AnimeMapper INSTANCE = Mappers.getMapper(AnimeMapper.class);

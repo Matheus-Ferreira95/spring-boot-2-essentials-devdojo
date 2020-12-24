@@ -25,7 +25,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.matheusf.springess.domain.Anime;
 import com.matheusf.springess.exception.BadRequestException;
 import com.matheusf.springess.repository.AnimeRepository;
-import com.matheusf.springess.service.AnimeService;
 import com.matheusf.springess.util.AnimeCreator;
 import com.matheusf.springess.util.AnimeDTOCreator;
 
@@ -39,7 +38,7 @@ public class AnimeServiceTest {
 	
 	@BeforeEach
 	void setUp() {
-		PageImpl<Anime> animePage = new PageImpl<>(List.of(AnimeCreator.createValidAnime()));
+		PageImpl<Anime> animePage = new PageImpl<>(List.of(AnimeCreator.createValidAnime()));		
 		
 		BDDMockito.when(animeRepositoryMock.findAll(ArgumentMatchers.any(Pageable.class)))
 		.thenReturn(animePage);
